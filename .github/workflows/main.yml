@@ -65,7 +65,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%d/%m/%Y')"
       - name: Get description
         id: description
-        run: echo "::set-output name=log::$(git log --pretty=format:"%h %cn %s" $(git describe --abbrev=0 --tags rc-0.0.17^)..${{ github.ref_name }})"
+        run: echo "::set-output name=log::$(git log --pretty=format:"%h %cn %s" ${{ github.ref_name }})"
       - name: update ticket
         run: |
           curl --location --request PATCH 'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-154' \
