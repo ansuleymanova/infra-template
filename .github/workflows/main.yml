@@ -73,4 +73,4 @@ jobs:
           --header 'Authorization: OAuth ${{ secrets.TOKEN }}' \
           --header 'Content-Type: application/json' \
           --data-raw '{"summary": "Релиз ${{ github.ref_name }} - ${{ steps.date.outputs.date }}", \
-          "description": "Ответственный за релиз: ${{github.event.pusher.name}} коммиты, попавшие в релиз: ${{ steps.description.outputs.log }}"}'
+          "description": "Ответственный за релиз: ${{ github.event.pusher.name }} коммиты, попавшие в релиз: ${{ steps.description.outputs.log }}"}'
