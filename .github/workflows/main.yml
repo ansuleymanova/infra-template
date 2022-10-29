@@ -68,6 +68,7 @@ jobs:
         run: echo "::set-output name=log::$(git log --pretty=format:"%h %cn %s" $(git describe --tags ${{ github.ref_name }}^)...${{ github.ref_name }})"
       - name: update ticket
         run: |
+          echo "$(git log --pretty=format:"%h %cn %s" $(git describe --tags ${{ github.ref_name }}^)...${{ github.ref_name }})"
           curl --location --request PATCH 'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-154' \
           --header 'X-Org-ID: ${{ secrets.ORG_ID }}' \
           --header 'Authorization: OAuth ${{ secrets.TOKEN }}' \
