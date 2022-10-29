@@ -49,8 +49,12 @@ jobs:
             type=ref,event=tag
 
       - name: push to dockerhub
+        id: docker-build
         uses: docker/build-push-action@v2
         with:
-          file: ./Dockerfile
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+
+      - name: Image digest
+          run: echo ${{ steps.docker_build.outputs.digest }}
