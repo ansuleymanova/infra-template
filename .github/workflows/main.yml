@@ -60,10 +60,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Get current date
+          id: date
+          run: echo "::set-output name=date::$(date +'$d/%m/%Y')"
       - name: update ticket
         run: |
           curl --location --request PATCH 'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-154' \
-          --header 'X-Org-ID: ${{ secrets.ORG_ID }}' \
-          --header 'Authorization: OAuth ${{ secrets.TOKEN }}' \
+          --header 'X-Org-ID: 7526988' \
+          --header 'Authorization: OAuth y0_AgAAAAA9uTUfAAiJTAAAAADSgisAGWs0vw5DRxGaOdfTnSvk0y5rs68' \
           --header 'Content-Type: application/json' \
-          --data-raw '{"summary": "rc-0.0.7 29.10.2022", "description": ${{ github.event.commits }}}'
+          --header 'Cookie: uid=ZYAAAGNdVdMMuAGEA3T9Ag==' \
+          --data-raw '{"summary": "${{  github.ref_name }} ${{ steps.date.outputs.date }}"}'
