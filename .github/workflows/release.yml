@@ -43,7 +43,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ github.ref_name }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/infra:${{ github.ref_name }}
       - name: post comment
         run: |
           curl --location --request POST 'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-154/comments' \
