@@ -65,12 +65,11 @@ jobs:
         run: echo "::set-output name=date::$(date +'%d/%m/%Y')"
       - name: Get description
         id: description
-        run: echo "::set-output name=log::$(g--pretty=format:"%h %cn %s" $(git describe --tags ${{ github.ref_name }}^)...${{ github.ref_name }})"
+        run: echo "::set-output name=log::$(git log --pretty=format:"%h %cn %s" $(git describe --tags ${{ github.ref_name }}^)...${{ github.ref_name }})"
       - name: update ticket
         run: |
           curl --location --request PATCH 'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-154' \
           --header 'X-Org-ID: ${{ secrets.ORG_ID }}' \
           --header 'Authorization: OAuth ${{ secrets.TOKEN }}' \
           --header 'Content-Type: application/json' \
-          --data-raw '{"summary": "Релиз ${{ github.ref_name }} - ${{ steps.date.outputs.date }}", \
-          "description": "Ответственный за релиз: ${{ github.event.pusher.name }} коммиты, попавшие в релиз: ${{ steps.description.outputs.log }}"}'
+          --data-raw '{"summary": "Релиз ${{ github.ref_name }} - ${{ steps.date.outputs.date }}", "description": "Ответственный за релиз: ${{ github.event.pusher.name }} \n коммиты, попавшие в релиз: \n ${{ steps.description.outputs.log }}"}'
