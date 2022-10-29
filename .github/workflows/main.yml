@@ -46,12 +46,19 @@ jobs:
           tags: |
             type=ref,event=tag
       - name: push to dockerhub
-        id: docker-build
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+      - name: post comment
+        run: |
+          curl --location --request POST 'https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-154/comments' \
+          --header 'X-Org-ID: ${{ secrets.ORG_ID }}' \
+          --header 'Authorization: OAuth ${{ secrets.TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{"text": "Собрали образ c тегом ${{ steps.meta.outputs.tags }}"}'
+        
 
   report_to_tracker:
     name: Send report to tracker
